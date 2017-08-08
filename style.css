@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'digital';
+    src: url('digital-7.ttf');
+}
+
+html,
+body {
+    color: #1F1641;
+    /* background-color: rgb(146, 196, 27);*/
+    width: 100%;
+    font-family: 'digital';
+}
+
+.tb {
+    width: 300px;
+    height: 400px;
+    margin: 0px auto;
+    margin-top: 5%;
+    background-color: rgb(210, 209, 214);
+}
+
+input,
+button {
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    background-color: rgb(58, 61, 67);
+    color: #ffffff;
+}
