@@ -1,8 +1,13 @@
 //minus break by one
 var newTime = false;
+var newTime_session = false;
 var breakValue = $('#break').text();
 var sessionValue = $('#session').text();
-var break_block = false; //block the clock when it is running
+var break_block = false; //block the break clock when it is running
+var session_block = false; //block the session clock when it is running
+var break_clock = "off"; //default hide the break-clock, only turn on when sesison clock off
+var session_clock = "on";
+
 $('#break-minus').click(function() {
         if (!break_block) {
             newTime = true;
@@ -23,14 +28,17 @@ $('#break-minus').click(function() {
 
 //minus session by one
 $('#session-minus').click(function() {
-        sessionValue--;
-        if (sessionValue <= 1) {
-            $('#session').text(1);
-            $('#session-value').text(1);
-            sessionValue = 1;
-        } else {
-            $('#session').text(sessionValue);
-            $('#session-value').text(sessionValue);
+        if (!session_block) {
+            newTime_session = true;
+            sessionValue--;
+            if (sessionValue <= 1) {
+                $('#session').text(1);
+                $('#session-value').text(1);
+                sessionValue = 1;
+            } else {
+                $('#session').text(sessionValue);
+                $('#session-value').text(sessionValue);
+            }
         }
     }
 
@@ -52,21 +60,116 @@ $('#break-plus').click(function() {
 
 //plus session by one
 $('#session-plus').click(function() {
-
-        sessionValue++;
-        $('#session').text(sessionValue);
-        $('#session-value').text(sessionValue);
+        if (!session_block) {
+            newTime_session = true;
+            sessionValue++;
+            $('#session').text(sessionValue);
+            $('#session-value').text(sessionValue);
+        }
     }
 
 );
 
 
+
+
+
+var isPause_session = true;
+
+var y;
+
+
+var reset_session = true;
+var time_remaining;
+
+
+// for session 
+//initializing time elapsed when circle is click
+$('#session-clock').on("click", function(e) {
+    e.preventDefault();
+    session_block = !session_block;
+
+    isPause_session = !isPause_session;
+    // sessionValue = $('#session').text();
+
+    var duration = sessionValue * 60, //to second
+        display = '#session-value';
+
+    // reset_session = !reset_session;
+    if (!isPause_session && reset_session || newTime_session) {
+
+        startTimer_session(duration, display);
+
+    } else {
+        startTimer_session(time_remaining, display);
+    }
+
+
+
+});
+//var width = 0;
+//var elem = $('#myBar');
+
+function startTimer_session(duration, display) {
+    var timer = duration;
+    var min, sec;
+
+    if (!isPause_session) {
+
+        y = setTimeout(function() {
+
+            //var z = progress();
+            //
+            if (newTime_session) {
+                clearTimeout(y);
+                // reset_session = true;
+                newTime_session = false;
+            }
+
+
+            if (!isPause_session) {
+                reset_session = false;
+                min = parseInt(timer / 60, 10);
+                sec = parseInt(timer % 60, 10);
+
+                //adding 0 if i < 10
+                min = min < 10 ? "0" + min : min;
+                sec = sec < 10 ? "0" + sec : sec;
+
+                $(display).text(min + ":" + sec);
+                //remaining = timer;
+                if (timer > 0) {
+                    startTimer_session(duration - 1, display);
+                } else {
+                    break_clock = "on";
+                    session_clock = "off";
+                    $('#session-clock').hide();
+                    $('#break-clock').show();
+                    $('#break-clock').trigger('click');
+                    reset_session = true;
+                    clearTimeout(y); //stop clock
+                }
+
+            } else {
+                time_remaining = timer;
+                clearTimeout(y);
+            }
+
+        }, 1000);
+    }
+
+}
+
+
+
 var isPause = true;
 var x;
-var remaining;
 var reset = true;
-var oldBreakValue;
-//initializing time elapsed when circle is click
+var remaining;
+
+
+
+//initializing  break time elapsed when circle is click
 $('#break-clock').on("click", function(e) {
     e.preventDefault();
     break_block = !break_block;
@@ -79,7 +182,7 @@ $('#break-clock').on("click", function(e) {
 
 
 
-    if (!isPause && reset) {
+    if (!isPause && reset || newTime) {
 
         startTimer(duration, display);
 
@@ -94,14 +197,15 @@ function startTimer(duration, display) {
     var min, sec;
     if (!isPause) {
 
-        x = setInterval(function() {
+        x = setTimeout(function() {
+
             reset = false;
             if (newTime) {
-                clearInterval(x);
-                reset = true;
+                clearTimeout(x);
                 newTime = false;
             }
             if (!isPause) {
+                reset_session = false;
                 min = parseInt(timer / 60, 10);
                 sec = parseInt(timer % 60, 10);
 
@@ -110,16 +214,36 @@ function startTimer(duration, display) {
                 sec = sec < 10 ? "0" + sec : sec;
 
                 $(display).text(min + ":" + sec);
-                timer--;
                 //remaining = timer;
-                if (timer < 0) {
+                if (timer > 0) {
+                    startTimer(duration - 1, display);
+                } else {
+                    break_clock = "off";
+                    session_clock = "on";
+                    $('#session-clock').show();
+                    $('#break-clock').hide();
+                    $('#session-clock').trigger('click');
                     reset = true;
-                    clearInterval(x); //stop clock
+                    clearTimeout(x); //stop clock
                 }
-            }
 
+            } else {
+                remaining = timer;
+                clearTimeout(x);
+            }
         }, 1000);
     }
 
 
 }
+
+/*function progress() {
+    if (width == 100) {
+        clearInterval(y);
+
+    } else {
+        width++;
+        elem.style.width = width + '%';
+    }
+
+}*/

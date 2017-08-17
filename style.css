@@ -48,12 +48,12 @@ button {
 .break-type {
     background: aqua;
     border: 10px solid aliceblue;
+    display: none;
 }
 
 .session-type {
     background: yellow;
     border: 10px solid aquamarine;
-    display: none;
 }
 
 .bottom-text {
