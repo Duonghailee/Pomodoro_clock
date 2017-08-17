@@ -90,7 +90,7 @@ $('#session-clock').on("click", function(e) {
     session_block = !session_block;
 
     isPause_session = !isPause_session;
-    // sessionValue = $('#session').text();
+    sessionValue = $('#session').text();
 
     var duration = sessionValue * 60, //to second
         display = '#session-value';
@@ -140,14 +140,16 @@ function startTimer_session(duration, display) {
                 //remaining = timer;
                 if (timer > 0) {
                     startTimer_session(duration - 1, display);
-                } else {
+                } else { //timer < 0 , count off
                     break_clock = "on";
                     session_clock = "off";
-                    $('#session-clock').hide();
-                    $('#break-clock').show();
-                    $('#break-clock').trigger('click');
                     reset_session = true;
                     clearTimeout(y); //stop clock
+                    $('#session-clock').hide();
+                    $('#break-clock').show();
+                    newTime = true;
+                    $('#break-clock').trigger('click');
+
                 }
 
             } else {
@@ -155,7 +157,7 @@ function startTimer_session(duration, display) {
                 clearTimeout(y);
             }
 
-        }, 1000);
+        }, 100);
     }
 
 }
@@ -218,20 +220,23 @@ function startTimer(duration, display) {
                 if (timer > 0) {
                     startTimer(duration - 1, display);
                 } else {
+                    reset = true;
+                    clearTimeout(x); //stop clock
                     break_clock = "off";
                     session_clock = "on";
                     $('#session-clock').show();
                     $('#break-clock').hide();
+                    newTime_session = true;
                     $('#session-clock').trigger('click');
-                    reset = true;
-                    clearTimeout(x); //stop clock
+
+                    console.log("time get hree" + sessionValue);
                 }
 
             } else {
                 remaining = timer;
                 clearTimeout(x);
             }
-        }, 1000);
+        }, 100);
     }
 
 
