@@ -147,8 +147,10 @@ function startTimer_session(duration, display) {
                     clearTimeout(y); //stop clock
                     $('#session-clock').hide();
                     $('#break-clock').show();
-                    newTime = true;
+                    newTime_session = true;
+                    isPause_session = true;
                     $('#break-clock').trigger('click');
+
 
                 }
 
@@ -157,7 +159,7 @@ function startTimer_session(duration, display) {
                 clearTimeout(y);
             }
 
-        }, 100);
+        }, 50);
     }
 
 }
@@ -183,12 +185,14 @@ $('#break-clock').on("click", function(e) {
         display = '#break-value';
 
 
-
     if (!isPause && reset || newTime) {
 
         startTimer(duration, display);
 
+    } else {
+        startTimer(remaining, display);
     }
+
 
 
 
@@ -201,13 +205,12 @@ function startTimer(duration, display) {
 
         x = setTimeout(function() {
 
-            reset = false;
             if (newTime) {
                 clearTimeout(x);
                 newTime = false;
             }
             if (!isPause) {
-                reset_session = false;
+                reset = false;
                 min = parseInt(timer / 60, 10);
                 sec = parseInt(timer % 60, 10);
 
@@ -226,17 +229,18 @@ function startTimer(duration, display) {
                     session_clock = "on";
                     $('#session-clock').show();
                     $('#break-clock').hide();
-                    newTime_session = true;
+                    newTime = true;
+                    isPause = true;
                     $('#session-clock').trigger('click');
 
-                    console.log("time get hree" + sessionValue);
+
                 }
 
             } else {
                 remaining = timer;
                 clearTimeout(x);
             }
-        }, 100);
+        }, 50);
     }
 
 
