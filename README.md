@@ -1,2 +1,2 @@
-# JavaScriptCalculator
-basic functionality javascript calculator
+# Pomodoro clock
+basic Pomodoro clock written by JS
