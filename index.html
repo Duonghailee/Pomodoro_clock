@@ -29,9 +29,9 @@
 
 
 <body>
-    <div class="text-center">
-        <h1 class="text-center uppercase">pomodoro clock </h1>
-        <div class="time-adjust text-center uppercase">
+    <div class="text-center uppercase">
+        <h1>pomodoro clock </h1>
+        <div>
             <div class="break">
                 <p>Break length</p>
                 <button id="break-minus" value="break-minus">-</button>
@@ -49,19 +49,27 @@
 
         </div>
 
+
         <div class="clock text-center">
-            <div id="break-clock" class="circle break-type">
-                Break
-                <p id="break-value" class="bottom-text"> 1
 
-                </p>
+            <!-- session clock -->
+            <div id="session-clock-frame">
+                <div id="session-clock">
+                    Session
+                    <p id="session-value" class="bottom-text"> 1
+                    </p>
+                </div>
             </div>
 
-            <div id="session-clock" class="circle session-type">
-                Session
-                <p id="session-value" class="bottom-text"> 1
-                </p>
+            <!-- break clock -->
+            <div id="break-clock-frame">
+                <div id="break-clock">
+                    Break
+                    <p id="break-value" class="bottom-text"> 1
+                    </p>
+                </div>
             </div>
+
 
         </div>
     </div>
