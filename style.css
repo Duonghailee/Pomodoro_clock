@@ -6,7 +6,7 @@
 html,
 body {
     /* background-color: rgb(146, 196, 27);*/
-    background-color: #117DBF;
+    background-color: #ffffff;
     color: #000000;
     font-family: digital;
 }
@@ -29,35 +29,37 @@ button {
     margin: 30px;
 }
 
+.bottom-text {
+    width: 100%;
+    margin-top: 50%;
+    text-align: center;
+}
+
 .clock {
     margin-left: auto;
     margin-right: auto;
     margin-top: 8%;
     display: table;
-}
-
-.circle {
     border-radius: 50%;
     width: 300px;
-    height: 300px;
     font-size: 300%;
     text-align: center;
     z-index: 1;
+    border: 1px solid #000000;
 }
 
-.break-type {
-    background: aqua;
-    border: 10px solid aliceblue;
+#break-clock {
     display: none;
 }
 
-.session-type {
-    background: yellow;
-    border: 10px solid aquamarine;
+#break-clock {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 
-.bottom-text {
+#session-clock {
     width: 100%;
-    margin-top: 50%;
-    text-align: center;
+    height: 100%;
+    border-radius: 50%;
 }
