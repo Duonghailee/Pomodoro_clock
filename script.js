@@ -3,8 +3,8 @@ var newTime = false;
 var newTime_session = false;
 var breakValue = $('#break').text();
 var sessionValue = $('#session').text();
-var break_block = false; //block the break clock when it is running
-var session_block = false; //block the session clock when it is running
+var break_block = false; //block the break clock adjustment when it is running
+var session_block = false; //block the session clock adjustment when it is running
 var break_clock = "off"; //default hide the break-clock, only turn on when sesison clock off
 var session_clock = "on";
 
@@ -149,6 +149,7 @@ function startTimer_session(duration, display) {
                     $('#break-clock').show();
                     newTime_session = true;
                     isPause_session = true;
+                    session_block = false;
                     $('#break-clock').trigger('click');
 
 
@@ -231,6 +232,7 @@ function startTimer(duration, display) {
                     $('#break-clock').hide();
                     newTime = true;
                     isPause = true;
+                    break_block = false;
                     $('#session-clock').trigger('click');
 
 
@@ -245,14 +247,3 @@ function startTimer(duration, display) {
 
 
 }
-
-/*function progress() {
-    if (width == 100) {
-        clearInterval(y);
-
-    } else {
-        width++;
-        elem.style.width = width + '%';
-    }
-
-}*/
