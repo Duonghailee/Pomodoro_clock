@@ -11,8 +11,8 @@ var breakValue = $('#break').text(); // storing timer value from users, automati
 var sessionValue = $('#session').text();
 var break_block = false; //default clock is off and time is adjustable , when clock on, time ajust function is not working
 var session_block = false;
-
-
+var break_per = 0;
+var session_per = 0; //percentage to fill color inside clock
 /* 
 function handle click event when user decreases break/sesison timer value by one */
 $('#break-minus').click(function() {
@@ -124,6 +124,7 @@ $('#session-clock').on("click", function(e) {
 function startTimer_session(duration, display) {
     var timer = duration;
     var min, sec;
+    // timer = duration, percent = 0%, time = 0; percent 100%;
 
     if (!isPause_session) {
 
@@ -133,6 +134,7 @@ function startTimer_session(duration, display) {
             if (newTime_session) { // if user adjust the timer, then reset the clock, also re-set the newTime to false for next adjust.
                 clearTimeout(y);
                 newTime_session = false;
+                session_per = 0;
             }
 
 
@@ -145,11 +147,18 @@ function startTimer_session(duration, display) {
                 min = min < 10 ? "0" + min : min;
                 sec = sec < 10 ? "0" + sec : sec;
 
+
+
                 $(display).text(min + ":" + sec);
+
+                $('#session-clock').css({ background: "linear-gradient(to top, #1EFFB2 " + session_per + "%,#feffff " + session_per + "%,#feffff 100%)" });
 
 
                 if (timer > 0) {
+
                     startTimer_session(duration - 1, display);
+                    session_per += 100 / (sessionValue * 60);
+
                 } else { //timer < 0 , count off
 
                     reset_session = true; // clock counts off, reset to new cycle.
@@ -159,6 +168,7 @@ function startTimer_session(duration, display) {
                     newTime_session = true; //rest these values for next turn of break-clock
                     isPause_session = true;
                     session_block = false;
+                    session_per = 0;
                     $('#break-clock').trigger('click');
                 }
 
@@ -219,6 +229,7 @@ function startTimer(duration, display) {
             if (newTime) {
                 clearTimeout(x);
                 newTime = false;
+                break_per = 0;
             }
             if (!isPause) {
                 reset = false;
@@ -230,9 +241,12 @@ function startTimer(duration, display) {
                 sec = sec < 10 ? "0" + sec : sec;
 
                 $(display).text(min + ":" + sec);
-                //remaining = timer;
+                $('#break-clock').css({ background: "linear-gradient(to top, #FF8F1A " + break_per + "%,#feffff " + break_per + "%,#feffff 100%)" });
+
                 if (timer > 0) {
                     startTimer(duration - 1, display);
+                    break_per += 100 / (breakValue * 60);
+
                 } else {
                     reset = true;
                     clearTimeout(x); //stop clock
@@ -241,6 +255,7 @@ function startTimer(duration, display) {
                     newTime = true;
                     isPause = true;
                     break_block = false;
+                    break_per = 0;
                     $('#session-clock').trigger('click');
 
                 }
