@@ -1,13 +1,20 @@
-//minus break by one
-var newTime = false;
-var newTime_session = false;
-var breakValue = $('#break').text();
-var sessionValue = $('#session').text();
-var break_block = false; //block the break clock adjustment when it is running
-var session_block = false; //block the session clock adjustment when it is running
-var break_clock = "off"; //default hide the break-clock, only turn on when sesison clock off
-var session_clock = "on";
+/* 
+this is a classic and dummy version for beginner, where object-oriend is not reachable, I am working on the new version with 
+object oriented terminology
+----- please note : there are 2 timers, one is break timer and the other session timer, they run recurssively after each one is finished
+*/
 
+
+var newTime = false; // default there is no time adjustment
+var newTime_session = false;
+var breakValue = $('#break').text(); // storing timer value from users, automatically get new value 
+var sessionValue = $('#session').text();
+var break_block = false; //default clock is off and time is adjustable , when clock on, time ajust function is not working
+var session_block = false;
+
+
+/* 
+function handle click event when user decreases break/sesison timer value by one */
 $('#break-minus').click(function() {
         if (!break_block) {
             newTime = true;
@@ -44,6 +51,9 @@ $('#session-minus').click(function() {
 
 );
 
+
+/* 
+function handle click event when user increases break/sesison timer value by one */
 //plus break by one
 $('#break-plus').click(function() {
         if (!break_block) {
@@ -74,13 +84,13 @@ $('#session-plus').click(function() {
 
 
 
-var isPause_session = true;
+var isPause_session = true; // variable storing 'pause state', isPause receives false that mean timer is running
 
-var y;
+var y; // storing timeout value and reset when necessary
 
 
-var reset_session = true;
-var time_remaining;
+var reset_session = true; // wake up when resume the timer
+var time_remaining; // storing remaining timer after 'pause' click from user, 
 
 
 // for session 
@@ -92,23 +102,24 @@ $('#session-clock').on("click", function(e) {
     isPause_session = !isPause_session;
     sessionValue = $('#session').text();
 
-    var duration = sessionValue * 60, //to second
-        display = '#session-value';
+    var duration = sessionValue * 60, //convert mins to seconds
+        display = '#session-value'; //where putting the time form mm : ss
 
-    // reset_session = !reset_session;
+
+    /* only start a new timer when user adjust the timer value  
+     */
     if (!isPause_session && reset_session || newTime_session) {
 
         startTimer_session(duration, display);
 
-    } else {
+    } else { // if user just pauses, then resume the timer by setTimeout for remaining timer
         startTimer_session(time_remaining, display);
     }
 
 
 
 });
-//var width = 0;
-//var elem = $('#myBar');
+
 
 function startTimer_session(duration, display) {
     var timer = duration;
@@ -118,11 +129,9 @@ function startTimer_session(duration, display) {
 
         y = setTimeout(function() {
 
-            //var z = progress();
-            //
-            if (newTime_session) {
+
+            if (newTime_session) { // if user adjust the timer, then reset the clock, also re-set the newTime to false for next adjust.
                 clearTimeout(y);
-                // reset_session = true;
                 newTime_session = false;
             }
 
@@ -137,22 +146,20 @@ function startTimer_session(duration, display) {
                 sec = sec < 10 ? "0" + sec : sec;
 
                 $(display).text(min + ":" + sec);
-                //remaining = timer;
+
+
                 if (timer > 0) {
                     startTimer_session(duration - 1, display);
                 } else { //timer < 0 , count off
-                    break_clock = "on";
-                    session_clock = "off";
-                    reset_session = true;
+
+                    reset_session = true; // clock counts off, reset to new cycle.
                     clearTimeout(y); //stop clock
                     $('#session-clock').hide();
                     $('#break-clock').show();
-                    newTime_session = true;
+                    newTime_session = true; //rest these values for next turn of break-clock
                     isPause_session = true;
                     session_block = false;
                     $('#break-clock').trigger('click');
-
-
                 }
 
             } else {
@@ -165,6 +172,9 @@ function startTimer_session(duration, display) {
 
 }
 
+
+// everthing looks similar to session clock, now is break-clock, kind of repeated code, second version coming soon.
+// sorry for a non-refactorring code version
 
 
 var isPause = true;
@@ -226,15 +236,12 @@ function startTimer(duration, display) {
                 } else {
                     reset = true;
                     clearTimeout(x); //stop clock
-                    break_clock = "off";
-                    session_clock = "on";
                     $('#session-clock').show();
                     $('#break-clock').hide();
                     newTime = true;
                     isPause = true;
                     break_block = false;
                     $('#session-clock').trigger('click');
-
 
                 }
 
