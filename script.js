@@ -95,7 +95,7 @@ var time_remaining; // storing remaining timer after 'pause' click from user,
 
 // for session 
 //initializing time elapsed when circle is click
-$('#session-clock').on("click", function(e) {
+$('#session-clock-frame').on("click", function(e) {
     e.preventDefault();
     session_block = !session_block;
 
@@ -163,13 +163,13 @@ function startTimer_session(duration, display) {
 
                     reset_session = true; // clock counts off, reset to new cycle.
                     clearTimeout(y); //stop clock
-                    $('#session-clock').hide();
-                    $('#break-clock').show();
+                    $('#session-clock-frame').hide();
+                    $('#break-clock-frame').show();
                     newTime_session = true; //rest these values for next turn of break-clock
                     isPause_session = true;
                     session_block = false;
                     session_per = 0;
-                    $('#break-clock').trigger('click');
+                    $('#break-clock-frame').trigger('click');
                 }
 
             } else {
@@ -177,7 +177,7 @@ function startTimer_session(duration, display) {
                 clearTimeout(y);
             }
 
-        }, 50);
+        }, 1000);
     }
 
 }
@@ -195,7 +195,7 @@ var remaining;
 
 
 //initializing  break time elapsed when circle is click
-$('#break-clock').on("click", function(e) {
+$('#break-clock-frame').on("click", function(e) {
     e.preventDefault();
     break_block = !break_block;
 
@@ -241,7 +241,7 @@ function startTimer(duration, display) {
                 sec = sec < 10 ? "0" + sec : sec;
 
                 $(display).text(min + ":" + sec);
-                $('#break-clock').css({ background: "linear-gradient(to top, #FF8F1A " + break_per + "%,#feffff " + break_per + "%,#feffff 100%)" });
+                $('#break-clock-frame').css({ background: "linear-gradient(to top, #FF8F1A " + break_per + "%,#feffff " + break_per + "%,#feffff 100%)" });
 
                 if (timer > 0) {
                     startTimer(duration - 1, display);
@@ -250,13 +250,13 @@ function startTimer(duration, display) {
                 } else {
                     reset = true;
                     clearTimeout(x); //stop clock
-                    $('#session-clock').show();
-                    $('#break-clock').hide();
+                    $('#session-clock-frame').show();
+                    $('#break-clock-frame').hide();
                     newTime = true;
                     isPause = true;
                     break_block = false;
                     break_per = 0;
-                    $('#session-clock').trigger('click');
+                    $('#session-clock-frame').trigger('click');
 
                 }
 
@@ -264,7 +264,7 @@ function startTimer(duration, display) {
                 remaining = timer;
                 clearTimeout(x);
             }
-        }, 50);
+        }, 1000);
     }
 
 
