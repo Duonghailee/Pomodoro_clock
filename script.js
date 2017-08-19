@@ -13,6 +13,7 @@ var break_block = false; //default clock is off and time is adjustable , when cl
 var session_block = false;
 var break_per = 0;
 var session_per = 0; //percentage to fill color inside clock
+var count_speed = 1000; // 1000ms = 1s, default!
 /* 
 function handle click event when user decreases break/sesison timer value by one */
 $('#break-minus').click(function() {
@@ -178,7 +179,7 @@ function startTimer_session(duration, display) {
                 clearTimeout(y);
             }
 
-        }, 10);
+        }, count_speed);
     }
 
 }
@@ -268,7 +269,7 @@ function startTimer(duration, display) {
                 remaining = timer;
                 clearTimeout(x);
             }
-        }, 10);
+        }, count_speed);
     }
 
 
