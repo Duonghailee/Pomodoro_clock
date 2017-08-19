@@ -29,7 +29,7 @@
 
 
 <body>
-    <div class="text-center uppercase">
+    <div class="text-center container-fluid uppercase">
         <h1>pomodoro clock </h1>
         <div>
             <div class="break">
@@ -49,32 +49,33 @@
 
         </div>
 
+    </div>
 
-        <div class="clock text-center">
+    <div id="timer" class="container-fluid">
+        <!-- session clock -->
+        <div id="session-clock-frame" class="clock">
+            <div id="session-clock">
+                <p>Session</p>
 
-            <!-- session clock -->
-            <div id="session-clock-frame">
-                <div id="session-clock">
-                    Session
-                    <p id="session-value" class="bottom-text"> 1
-                    </p>
-                </div>
+                <p id="session-value" class="bottom-text"> 1
+                </p>
             </div>
+        </div>
 
-            <!-- break clock -->
-            <div id="break-clock-frame">
-                <div id="break-clock">
-                    Break
-                    <p id="break-value" class="bottom-text"> 1
-                    </p>
-                </div>
+        <!-- break clock -->
+        <div id="break-clock-frame" class="clock">
+            <div id="break-clock">
+                <p>Break</p>
+                <p id="break-value" class="bottom-text"> 1
+                </p>
             </div>
-
-
         </div>
     </div>
 
-    </div>
+
+
+
+
     <script src="script.js "></script>
 
 </body>
