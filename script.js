@@ -170,6 +170,7 @@ function startTimer_session(duration, display) {
                     session_block = false;
                     session_per = 0;
                     $('#break-clock-frame').trigger('click');
+
                 }
 
             } else {
@@ -177,7 +178,7 @@ function startTimer_session(duration, display) {
                 clearTimeout(y);
             }
 
-        }, 1000);
+        }, 10);
     }
 
 }
@@ -196,6 +197,9 @@ var remaining;
 
 //initializing  break time elapsed when circle is click
 $('#break-clock-frame').on("click", function(e) {
+    var break_sound = document.getElementById("break-sound");
+    break_sound.play();
+
     e.preventDefault();
     break_block = !break_block;
 
@@ -264,7 +268,7 @@ function startTimer(duration, display) {
                 remaining = timer;
                 clearTimeout(x);
             }
-        }, 1000);
+        }, 10);
     }
 
 
