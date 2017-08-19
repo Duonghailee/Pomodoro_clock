@@ -14,6 +14,9 @@
     <meta name="author" content="duonghailee">
     <meta name="keywords" content="free pomodoro clock codepen.io">
 
+    <meta name="apple-mobile-web-capable" content="yes" />
+    <link rel="apple-touch-icon" href="pomodoro.png" />
+
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -29,21 +32,23 @@
 
 
 <body>
-    <div class="text-center container-fluid uppercase">
+    <div class="text-center uppercase">
         <h1>pomodoro clock </h1>
         <div>
+
             <div class="break">
                 <p>Break length</p>
                 <button id="break-minus" value="break-minus">-</button>
-                <button id="break" value="5">1</button>
+                <button id="break" value="5">5</button>
                 <button id="break-plus" value="break-plus">+</button>
 
             </div>
 
+
             <div class="session">
                 <p>session length</p>
                 <button id="session-minus" value="session-minus">-</button>
-                <button id="session" value="25">1</button>
+                <button id="session" value="25">25</button>
                 <button id="session-plus" value="session-plus">+</button>
             </div>
 
@@ -51,13 +56,13 @@
 
     </div>
 
-    <div id="timer" class="container-fluid">
+    <div id="timer" class="#">
         <!-- session clock -->
         <div id="session-clock-frame" class="clock">
             <div id="session-clock">
                 <p>Session</p>
 
-                <p id="session-value" class="bottom-text"> 1
+                <p id="session-value" class="bottom-text"> 25
                 </p>
             </div>
         </div>
@@ -66,15 +71,12 @@
         <div id="break-clock-frame" class="clock">
             <div id="break-clock">
                 <p>Break</p>
-                <p id="break-value" class="bottom-text"> 1
+                <p id="break-value" class="bottom-text"> 5
                 </p>
+                <audio id="break-sound" src="break.mp3"></audio>
             </div>
         </div>
     </div>
-
-
-
-
 
     <script src="script.js "></script>
 
